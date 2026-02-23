@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "name": "Basic",
+    "maps": [
+        {
+            "name": "BasicAction",
+            "id": "f4807c84-c3ad-48f3-a99e-e208b6f48c1d",
+            "actions": [
+                {
+                    "name": "ButtonPress",
+                    "type": "Button",
+                    "id": "87ebd416-c0dc-4fae-b22c-de79d2d4ab10",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7d98ff52-abe6-4333-a03c-736def22bae2",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ButtonPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98211beb-9486-4c2b-8365-42f4773e4ce6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ButtonPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
