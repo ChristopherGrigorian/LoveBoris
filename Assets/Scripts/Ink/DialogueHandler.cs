@@ -16,6 +16,7 @@ public class DialogueHandler : MonoBehaviour
     [SerializeField] private Button choiceButtonPrefab;
     [SerializeField] private Image overlayScreen;
     [SerializeField] private List<Canvas> choiceCanvasGroup;
+    [SerializeField] private Canvas continuationCanvasGroup;
 
     [Header("Params")]
     [SerializeField] private float typingSpeed = 0.04f;
@@ -52,6 +53,8 @@ public class DialogueHandler : MonoBehaviour
     private bool choicesShownThisLine = false;
 
     private AudioClip originalTypeBlip;
+
+    private Coroutine continueFade = null;
 
     public string heldStory = "";
 
@@ -98,12 +101,32 @@ public class DialogueHandler : MonoBehaviour
             {
                 choicesShownThisLine = true;
                 DisplayChoices();
+                FadeContinuation(0.5f, 0f);
+                
+            }
+            else
+            {
+                if (story.canContinue)
+                {
+                    FadeContinuation(2f, 1f);
+                }
             }
         }
     }
 
+    private void FadeContinuation(float length, float alpha) 
+    {
+        if (continueFade != null)
+        {
+            StopCoroutine(continueFade);
+        }
+        continueFade = StartCoroutine(FadeLogic.Instance.FadeCanvasGroup(continuationCanvasGroup, length, alpha));
+    }
+
     private void ContinueStory()
     {
+        FadeContinuation(0.5f, 0f);
+
         foreach (Transform child in buttonContainer.transform)
             Destroy(child.gameObject);
 
@@ -117,19 +140,17 @@ public class DialogueHandler : MonoBehaviour
             heldStory = story.Continue();
 
             typingCoroutine = StartCoroutine(DisplayLine(heldStory, dialogueText));
-
-
         }
         else
         {
             StopTypingSfx();
             // No choices = end of story
+            Debug.Log("Made it here.");
             if (overlayScreen != null) overlayScreen.gameObject.SetActive(false);
             Button endButton = Instantiate(choiceButtonPrefab, buttonContainer.transform);
             endButton.GetComponentInChildren<TextMeshProUGUI>().text = "End";
             endButton.onClick.AddListener(() => gameObject.SetActive(false));
         }
-
     }
 
     private void DisplayChoices()
@@ -285,6 +306,13 @@ public class DialogueHandler : MonoBehaviour
         {
             choicesShownThisLine = true;
             DisplayChoices();
+            FadeContinuation(0.5f, 0f);
+        } else
+        {
+            if (story.canContinue)
+            {
+                FadeContinuation(2f, 1f);
+            }
         }
     }
 
