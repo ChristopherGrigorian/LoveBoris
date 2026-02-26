@@ -17,6 +17,7 @@ public class DialogueHandler : MonoBehaviour
     [SerializeField] private Image overlayScreen;
     [SerializeField] private List<Canvas> choiceCanvasGroup;
     [SerializeField] private Canvas continuationCanvasGroup;
+    [SerializeField] private TextMeshProUGUI characterTalkingText;
 
     [Header("Params")]
     [SerializeField] private float typingSpeed = 0.04f;
@@ -80,6 +81,7 @@ public class DialogueHandler : MonoBehaviour
         originalTypeBlip = typeBlip;
 
         story.BindExternalFunction("ChangeVoice", (string character) => ChangeVoice(character));
+        story.BindExternalFunction("StartCombat", (string enemy, string continueKnot) => GameController.Instance.StartCombat(enemy, continueKnot));
 
         ContinueStory();
     }
@@ -370,10 +372,12 @@ public class DialogueHandler : MonoBehaviour
             if (c.characterName == character)
             {
                 typeBlip = c.voiceBank;
+                characterTalkingText.text = character;
                 return;
             }
         }
 
+        characterTalkingText.text = character;
         typeBlip = originalTypeBlip;
     }
 }

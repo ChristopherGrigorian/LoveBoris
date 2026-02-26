@@ -38,6 +38,17 @@
                     "action": "ButtonPress",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c59a2c7-7881-4a60-807b-df791fb9ebbb",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ButtonPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
