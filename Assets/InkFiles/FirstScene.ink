@@ -24,5 +24,9 @@ I'm really sorry.
     
 == FS2 ==
 You're right, my bad...
+~ StartCombat("BADCAT", "FS3")
+->DONE
 
+== FS3 ==
+It looks like we're all done here.
 -> DONE

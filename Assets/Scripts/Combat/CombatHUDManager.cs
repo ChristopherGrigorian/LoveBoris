@@ -46,8 +46,6 @@ public class CombatHUDManager : MonoBehaviour
         weaponTabButton.onClick.AddListener(() => ShowTab("weapon"));
         skillTabButton.onClick.AddListener(() => ShowTab("skill"));
         itemTabButton.onClick.AddListener(() => ShowTab("item"));
-
-        ShowTab("weapon");
     }
 
     private void ShowTab(string menu)
@@ -87,9 +85,6 @@ public class CombatHUDManager : MonoBehaviour
             var ui = btn.GetComponent<SkillButtonUI>();
             ui.Bind(s, cachedSkillCallback);
         }
-
-
-        ShowTab("weapon");
     }
 
     private void ClearChildren(Transform t)
