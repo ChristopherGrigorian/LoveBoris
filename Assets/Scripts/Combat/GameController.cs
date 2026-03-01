@@ -15,10 +15,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject combatHUD;
     [SerializeField] private GameObject dialogueHUD;
 
-    [Header("CombatantInformation")]
-    [SerializeField] private TextMeshProUGUI CombatantName;
-    [SerializeField] private TextMeshProUGUI CombatantHealth;
-    [SerializeField] private TextMeshProUGUI CombatantMP;
+    [Header("Player Tag")]
+    [SerializeField] private Transform playerTargetContainer;
+    [SerializeField] private PlayerTag playerTag;
 
     [Header("Enemy Target Buttons")]
     [SerializeField] private Transform enemyTargetContainer; // parent that holds enemy buttons
@@ -77,6 +76,7 @@ public class GameController : MonoBehaviour
 
         PrepareCombatants();
         BuildEnemyTargetButtons();
+        BuildPlayerTags();
 
         currentTurnIndex = 0;
 
@@ -111,6 +111,21 @@ public class GameController : MonoBehaviour
 
         turnOrder.Sort((a, b) => b.data.speed.CompareTo(a.data.speed));
     }
+    private void BuildPlayerTags()
+    {
+        for (int i = playerTargetContainer.childCount - 1; i >= 0; i--) 
+        {
+            Destroy(playerTargetContainer.GetChild(i).gameObject);
+        }
+
+        var players = turnOrder.Where(c => c.isPlayerControlled).ToList();
+        foreach (var player in players)
+        {
+            var tag = Instantiate(playerTag, playerTargetContainer);
+            tag.Bind(player);
+            player.AssignPlayerTag(tag);
+        }
+    }   
 
     private void BuildEnemyTargetButtons()
     {
@@ -138,10 +153,6 @@ public class GameController : MonoBehaviour
 
             if (currentCombatant.currentHP > 0)
             {
-                CombatantName.text = "Current Combatant: " + currentCombatant.Name;
-                CombatantHealth.text = "Combatant HP: " + currentCombatant.currentHP.ToString();
-                CombatantMP.text = "Combatant MP: " + currentCombatant.currentMP.ToString();
-
                 yield return currentCombatant.isPlayerControlled
                     ? StartCoroutine(PlayerTurn(currentCombatant))
                     : StartCoroutine(EnemyTurn(currentCombatant));

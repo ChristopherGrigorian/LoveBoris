@@ -35,6 +35,7 @@ public class Combatant
 
     public List<ActiveStatus> statuses = new();
 
+    private PlayerTag playerTag;
 
     public Combatant(CharacterData data, bool isPlayer)
     {
@@ -85,6 +86,11 @@ public class Combatant
         {
             statuses.Add(new ActiveStatus(effect, dur, effect.stackable ? stacksToAdd : 1));
         }
+    }
+
+    public void AssignPlayerTag(PlayerTag tag) 
+    {
+        playerTag = tag;
     }
 
     // ---------- EFFECTIVE STATS (base + modifiers from active statuses) ----------
