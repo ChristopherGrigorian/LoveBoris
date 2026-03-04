@@ -166,6 +166,7 @@ public class GameController : MonoBehaviour
 
     private IEnumerator PlayerTurn(Combatant player)
     {
+        Debug.Log($"It is {player.Name} turn.");
         // reset selections
         selectedSkill = null;
         selectedTarget = null;
@@ -193,6 +194,7 @@ public class GameController : MonoBehaviour
 
     private IEnumerator EnemyTurn(Combatant enemy)
     {
+        Debug.Log($"It is {enemy.Name} turn.");
         yield return null;
     }
 
